@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Notes
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>My Notes</h2>
+
+        <a href="{% url 'note_create' %}" class="btn btn-primary">
+            Create Note
+        </a>
+    </div>
+
+    {% if notes %}
+
+        <div class="row">
+
+            {% for note in notes %}
+
+                <div class="col-md-6 mb-4">
+
+                    <div class="card shadow-sm h-100">
+
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <a
+                                    href="{% url 'note_detail' note.id %}"
+                                    class="text-decoration-none"
+                                >
+                                    {{ note.title }}
+                                </a>
+                            </h5>
+
+                            <p class="card-text">
+                                {{ note.content|truncatewords:25 }}
+                            </p>
+
+                            <small class="text-muted">
+                                Created: {{ note.created_at }}
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="text-center mt-5">
+            <p class="text-muted">
+                You don't have any notes yet.
+            </p>
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
